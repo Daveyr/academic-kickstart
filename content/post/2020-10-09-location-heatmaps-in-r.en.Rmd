@@ -21,11 +21,15 @@ image:
 projects: []
 ---
 
+```{r include=FALSE}
+knitr::opts_chunk$set(comment = "#>", echo = FALSE)
+```
+
 # Location heatmaps in R
 
 Let's use a built-in example within R: location of earthquakes off the island of Fiji.
 
-```{R}
+```{r}
 data(quakes)
 head(quakes)
 ```
@@ -38,6 +42,7 @@ This data set contains spatial point data of earthquakes modelled with a certain
 ```{r}
 library(sf)
 library(tmap)
+library(widgetframe) # only needed for displaying on this website
 pt <- st_as_sf(quakes, coords = c("long", "lat"), crs = 4326)
 
 tmap_mode("view")
@@ -46,7 +51,6 @@ tm_basemap(c("CartoDB.Positron")) +
   tm_dots(id = "name", alpha = 0.3, size = 0.1, col = "mag",
                 palette = "-inferno", style = "log10", title = "Magnitude",
                 popup.vars = c("mag", "depth", "stations"))
-
 ```
 
 # Create a grid
@@ -86,7 +90,7 @@ The above wasn't really a heatmap so much as a grid. Fortunately the leaflet pac
 ```{r}
 library(leaflet)
 library(leaflet.extras)
-quakes %>%
+map <- quakes %>%
   leaflet() %>% 
   addTiles() %>% 
   addProviderTiles(providers$CartoDB.Positron) %>% 
@@ -95,4 +99,5 @@ quakes %>%
              intensity=~stations,
              max=~max(stations) + 10,
              radius=20,blur=10)
+frameWidget(map)
 ```
