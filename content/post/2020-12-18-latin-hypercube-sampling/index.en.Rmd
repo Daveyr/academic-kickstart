@@ -87,7 +87,7 @@ lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter 
 ## Testing coverage
 In theory, each sample should be orthogonal, or independent, of each other sample to the greatest possible extent. Another way of putting it is that there should neither be any one value overrepresented or under-represented in the sample set. Let's test this in practice:
 
-```{r coverage_chart}
+```{r coverage_chart, fig.height=3, fig.width=4}
 library(ggplot2)
 big_sample <- lhs_sample(decisions = list(a = a,b = b,c = c), n = 1000)
 
