@@ -40,7 +40,7 @@ There are $3 * 2 * 4 = 24$ possible unique combinations of these decisions (if a
 
 Let's assume we would like only 12 individuals from the 24 potential unique combinations, but we still want good representation of all/most possible decisions. Using the lhs library from R, we first create 12 random uniform distributions between 0 and 1 for each of the three decisions, a, b and c.
 
-```{r message=FALSE, warning=FALSE}
+```{r sample_dist, message=FALSE, warning=FALSE}
 library(lhs)
 library(dplyr)
 library(purrr)
@@ -59,7 +59,7 @@ sample
 
 Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.
 
-```{r}
+```{r decision_dist}
 # Random choices for each decision with distributions based on a, b and c
 choices <- map2(sample, all_decisions,
                 ~cut(.x, length(.y), labels = .y)) %>%
@@ -69,7 +69,7 @@ choices
 ```
 
 For convenience we can bring this into a single function like so.
-```{r message=FALSE, warning=FALSE}
+```{r function, message=FALSE, warning=FALSE}
 lhs_sample <- function(decisions, n){
   stopifnot(is.list(decisions))
   len_decisions <- length(decisions)
@@ -87,7 +87,7 @@ lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter 
 ## Testing coverage
 In theory, each sample should be orthogonal, or independent, of each other sample to the greatest possible extent. Another way of putting it is that there should neither be any one value overrepresented or under-represented in the sample set. Let's test this in practice:
 
-```{r}
+```{r coverage_chart}
 library(ggplot2)
 big_sample <- lhs_sample(decisions = list(a = a,b = b,c = c), n = 1000)
 
@@ -96,7 +96,7 @@ ggplot(big_sample, aes(x = c, fill = c)) +
   scale_fill_manual(values = c("red", "green", "blue", "black")) +
   labs(title = "For a single decision, each value has been sampled equally")
 
-ggplot(big_sample, aes(x = a,, y = b, colour = c)) +
+ggplot(big_sample, aes(x = a, y = b, colour = c)) +
   geom_jitter() +
   scale_colour_manual(values = c("red", "green", "blue", "black")) +
   labs(title = "Every value combination across all decisions has also been sampled equally")
