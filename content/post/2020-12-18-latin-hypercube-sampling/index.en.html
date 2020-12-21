@@ -55,19 +55,19 @@ names(sample) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
 
 # Uniform random values between 0 and 1
 sample</code></pre>
-<pre><code>##             a           b          c
-## 1  0.14926706 0.383476575 0.10310310
-## 2  0.64558012 0.877443962 0.27628174
-## 3  0.87136226 0.239399572 0.45972253
-## 4  0.78349972 0.159120896 0.79750826
-## 5  0.98124877 0.009090905 0.65285448
-## 6  0.26785415 0.810474726 0.40534921
-## 7  0.56868139 0.420502321 0.92545507
-## 8  0.42602415 0.597936565 0.85115090
-## 9  0.20221800 0.512280959 0.50711495
-## 10 0.38456024 0.681973572 0.16822720
-## 11 0.03447552 0.995413761 0.07564893
-## 12 0.72461784 0.315523671 0.67576630</code></pre>
+<pre><code>##             a          b           c
+## 1  0.86297590 0.87166601 0.642949621
+## 2  0.12298899 0.29223853 0.946490815
+## 3  0.81953516 0.07972020 0.808074911
+## 4  0.31481227 0.36758653 0.143129972
+## 5  0.69663023 0.95135132 0.914242175
+## 6  0.36300372 0.61560262 0.235146709
+## 7  0.20291468 0.50893168 0.000381986
+## 8  0.06833569 0.49722671 0.284080700
+## 9  0.97519387 0.23553237 0.350345747
+## 10 0.50854503 0.76592850 0.716968703
+## 11 0.66236088 0.72236013 0.516816164
+## 12 0.46105454 0.09684975 0.497709581</code></pre>
 <p>Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.</p>
 <pre class="r"><code># Random choices for each decision with distributions based on a, b and c
 choices &lt;- map2(sample, all_decisions,
@@ -78,18 +78,18 @@ choices</code></pre>
 <pre><code>## # A tibble: 12 x 3
 ##    a     b     c    
 ##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;
-##  1 1     TRUE  red  
-##  2 2     FALSE red  
-##  3 3     TRUE  green
-##  4 3     TRUE  black
-##  5 3     TRUE  blue 
-##  6 1     FALSE green
-##  7 2     TRUE  black
-##  8 2     FALSE black
-##  9 1     FALSE blue 
-## 10 2     FALSE red  
-## 11 1     FALSE red  
-## 12 3     TRUE  blue</code></pre>
+##  1 3     FALSE blue 
+##  2 1     TRUE  black
+##  3 3     TRUE  black
+##  4 1     TRUE  red  
+##  5 3     FALSE black
+##  6 1     FALSE red  
+##  7 1     TRUE  red  
+##  8 1     TRUE  green
+##  9 3     TRUE  green
+## 10 2     FALSE black
+## 11 2     FALSE blue 
+## 12 2     TRUE  blue</code></pre>
 <p>For convenience we can bring this into a single function like so.</p>
 <pre class="r"><code>lhs_sample &lt;- function(decisions, n){
   stopifnot(is.list(decisions))
@@ -104,18 +104,18 @@ choices</code></pre>
 
 lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter = LETTERS[24:26]), n = 10)</code></pre>
 <pre><code>## # A tibble: 10 x 3
-##    cars               species    letter
-##    &lt;fct&gt;              &lt;fct&gt;      &lt;fct&gt; 
-##  1 Fiat X1-9          virginica  Z     
-##  2 Mazda RX4          versicolor Y     
-##  3 Lotus Europa       virginica  Y     
-##  4 Cadillac Fleetwood setosa     X     
-##  5 Volvo 142E         setosa     X     
-##  6 Hornet Sportabout  virginica  X     
-##  7 Merc 450SL         setosa     Z     
-##  8 Toyota Corona      setosa     Z     
-##  9 Toyota Corolla     virginica  Z     
-## 10 Duster 360         versicolor Y</code></pre>
+##    cars              species    letter
+##    &lt;fct&gt;             &lt;fct&gt;      &lt;fct&gt; 
+##  1 Fiat X1-9         setosa     Z     
+##  2 Merc 450SL        setosa     Z     
+##  3 Chrysler Imperial versicolor X     
+##  4 Merc 240D         virginica  Y     
+##  5 Volvo 142E        versicolor Y     
+##  6 Hornet Sportabout virginica  X     
+##  7 Camaro Z28        virginica  Y     
+##  8 Mazda RX4         virginica  Z     
+##  9 Toyota Corolla    versicolor X     
+## 10 Ferrari Dino      setosa     X</code></pre>
 </div>
 <div id="testing-coverage" class="section level2">
 <h2>Testing coverage</h2>
