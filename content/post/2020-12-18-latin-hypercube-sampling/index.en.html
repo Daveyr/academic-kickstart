@@ -56,18 +56,18 @@ names(sample) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
 # Uniform random values between 0 and 1
 sample</code></pre>
 <pre><code>##             a          b          c
-## 1  0.41652181 0.18546382 0.87467267
-## 2  0.81220155 0.14374777 0.18730695
-## 3  0.44328892 0.81169787 0.46899786
-## 4  0.05260195 0.07355818 0.71380152
-## 5  0.23585575 0.74240078 0.79222327
-## 6  0.29855073 0.40655744 0.04641022
-## 7  0.64784589 0.58572787 0.99830407
-## 8  0.88174995 0.90155272 0.15134718
-## 9  0.56699472 0.32409568 0.29897915
-## 10 0.94901332 0.99298967 0.59935152
-## 11 0.68635953 0.46947453 0.40373326
-## 12 0.12035170 0.50435556 0.57419772</code></pre>
+## 1  0.21472497 0.73466946 0.49349412
+## 2  0.35191162 0.79121869 0.30701897
+## 3  0.28447821 0.60519770 0.01319756
+## 4  0.05324036 0.40622840 0.38413566
+## 5  0.74980065 0.32397864 0.91932357
+## 6  0.99179711 0.90166144 0.82800193
+## 7  0.86776768 0.95964806 0.57379804
+## 8  0.13184185 0.17219289 0.84752474
+## 9  0.66416225 0.01036487 0.12765351
+## 10 0.52872861 0.41913073 0.62378960
+## 11 0.44870595 0.13580837 0.69904152
+## 12 0.83058393 0.55851636 0.16803376</code></pre>
 <p>Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.</p>
 <pre class="r"><code># Random choices for each decision with distributions based on a, b and c
 choices &lt;- map2(sample, all_decisions,
@@ -78,18 +78,18 @@ choices</code></pre>
 <pre><code>## # A tibble: 12 x 3
 ##    a     b     c    
 ##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;
-##  1 2     TRUE  black
-##  2 3     TRUE  red  
-##  3 2     FALSE green
-##  4 1     TRUE  blue 
-##  5 1     FALSE black
-##  6 1     TRUE  red  
-##  7 2     FALSE black
-##  8 3     FALSE red  
-##  9 2     TRUE  green
-## 10 3     FALSE blue 
-## 11 3     TRUE  green
-## 12 1     TRUE  blue</code></pre>
+##  1 1     FALSE blue 
+##  2 1     FALSE green
+##  3 1     FALSE red  
+##  4 1     TRUE  green
+##  5 3     TRUE  black
+##  6 3     FALSE black
+##  7 3     FALSE blue 
+##  8 1     TRUE  black
+##  9 2     TRUE  red  
+## 10 2     TRUE  blue 
+## 11 2     TRUE  black
+## 12 3     FALSE red</code></pre>
 <p>For convenience we can bring this into a single function like so.</p>
 <pre class="r"><code>lhs_sample &lt;- function(decisions, n){
   stopifnot(is.list(decisions))
@@ -104,18 +104,18 @@ choices</code></pre>
 
 lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter = LETTERS[24:26]), n = 10)</code></pre>
 <pre><code>## # A tibble: 10 x 3
-##    cars               species    letter
-##    &lt;fct&gt;              &lt;fct&gt;      &lt;fct&gt; 
-##  1 Pontiac Firebird   virginica  X     
-##  2 Fiat 128           versicolor Y     
-##  3 Hornet Sportabout  setosa     Y     
-##  4 Merc 280           setosa     X     
-##  5 Mazda RX4          setosa     X     
-##  6 Ford Pantera L     setosa     Z     
-##  7 Dodge Challenger   versicolor Z     
-##  8 Volvo 142E         virginica  Y     
-##  9 Duster 360         versicolor X     
-## 10 Cadillac Fleetwood virginica  Z</code></pre>
+##    cars              species    letter
+##    &lt;fct&gt;             &lt;fct&gt;      &lt;fct&gt; 
+##  1 Volvo 142E        virginica  Z     
+##  2 Mazda RX4         versicolor Z     
+##  3 Toyota Corolla    versicolor Z     
+##  4 Hornet Sportabout setosa     X     
+##  5 Merc 450SLC       setosa     Y     
+##  6 Fiat 128          virginica  X     
+##  7 Lotus Europa      virginica  Y     
+##  8 Duster 360        setosa     Y     
+##  9 Merc 450SE        virginica  X     
+## 10 Pontiac Firebird  versicolor Y</code></pre>
 </div>
 <div id="testing-coverage" class="section level2">
 <h2>Testing coverage</h2>
@@ -127,10 +127,10 @@ ggplot(big_sample, aes(x = c, fill = c)) +
   geom_bar() +
   scale_fill_manual(values = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;black&quot;)) +
   labs(title = &quot;For a single decision, each value has been sampled equally&quot;)</code></pre>
-<p><img src="/post/2020-12-18-latin-hypercube-sampling/index.en_files/figure-html/coverage_chart-1.png" width="384" /></p>
+<p><img src="{{< relref "post/2020-12-18-latin-hypercube-sampling/index.en.html" >}}index.en_files/figure-html/coverage_chart-1.png" width="384" /></p>
 <pre class="r"><code>ggplot(big_sample, aes(x = a, y = b, colour = c)) +
   geom_jitter() +
   scale_colour_manual(values = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;black&quot;)) +
   labs(title = &quot;Every value combination across all decisions has also been sampled equally&quot;)</code></pre>
-<p><img src="/post/2020-12-18-latin-hypercube-sampling/index.en_files/figure-html/coverage_chart-2.png" width="384" /></p>
+<p><img src="{{< relref "post/2020-12-18-latin-hypercube-sampling/index.en.html" >}}index.en_files/figure-html/coverage_chart-2.png" width="384" /></p>
 </div>
