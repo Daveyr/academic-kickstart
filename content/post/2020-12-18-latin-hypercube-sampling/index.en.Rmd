@@ -83,10 +83,23 @@ lhs_sample <- function(decisions, n){
 lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter = LETTERS[24:26]), n = 10)
 ```
 
+## Continuous distributions
+The above example was for sampling from distributions where allowable values were either factors or whole integers. For continuous numerical distributions we can use the following.
+
+```{r continuous}
+library(tidyr)
+a_continuous <- all_decisions[[1]]
+
+choices_continuous <- qunif(sample$a, min = min(a_continuous), max = max(a_continuous))
+  
+choices_continuous
+
+```
+
 ## Testing coverage
 In theory, each sample should be orthogonal, or independent, of each other sample to the greatest possible extent. Another way of putting it is that there should neither be any one value overrepresented or under-represented in the sample set. Let's test this in practice:
 
-```{r coverage_chart, fig.height=3, fig.width=4}
+```{r coverage_chart}
 library(ggplot2)
 big_sample <- lhs_sample(decisions = list(a = a,b = b,c = c), n = 1000)
 
