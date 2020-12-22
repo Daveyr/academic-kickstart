@@ -1,0 +1,136 @@
+---
+title: Latin Hypercube Sampling
+author: ''
+date: '2020-12-18'
+slug: latin-hypercube-sampling
+categories:
+  - Guide
+tags:
+  - R
+  - Algorithm
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2020-12-18T16:17:08Z'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+
+
+<div id="what-is-lhs" class="section level2">
+<h2>What is LHS?</h2>
+<p>Latin hypercube sampling aims to bring the best of both worlds: the unbiased random sampling of monte carlo simulation; and the even coverage of a grid search over the decision space. It does this by ensuring values for all variables are as uncorrelated and widely varying as possible (over the range of permitted values).</p>
+</div>
+<div id="why-do-i-need-one" class="section level2">
+<h2>Why do I need one?</h2>
+<p>The background to this is that I have been working on improving the convergence of an optimisation package that uses genetic algorithms. Having a good distribution of “genes”, or decisions within the initial population is key to allowing a GA to effectively explore the decision space. The <code>ga()</code> function within the GA package in R allows for a <em>suggestions</em> argument, which takes a matrix of decision values and places them within the starting population. Initially I wrote one function to create evenly spaced sequences for every decision between the lower and upper bound of allowable values, from which I enumerated all possible combinations using <code>expand.grid()</code>. I then wrote another function to take a model object and a user-defined population size and automatically work out the nearest population count that allowed for even sampling over the model’s decision bounds.</p>
+<p>For models with large numbers of decisions the potential number of combinations is enormous. This is true even if you only select the upper and lower bound per decision. Already with 30 independent decisions with two possible values the number of combinations is 2^30 = 10,737,41,824, 10 times more than the number of stars in the average galaxy. Combinatorial algorithms are the worst type for growth in complexity (<span class="math inline">\(O(n!)\)</span>). I needed a way of randomly sampling from the decisions but in a way that ensured the starting population had lots of diversity. This is the exact use case for LHS.</p>
+</div>
+<div id="practical-examples" class="section level2">
+<h2>Practical examples</h2>
+<p>Let’s assume we have three decisions, where:</p>
+<ul>
+<li>decision a can be between 1 and 3,</li>
+<li>decision b can be TRUE or FALSE, and</li>
+<li>decision c can be red, green, blue or black</li>
+</ul>
+<p>There are <span class="math inline">\(3 * 2 * 4 = 24\)</span> possible unique combinations of these decisions (if a can only take on integer values). An individual in the starting population of a genetic algorithm would be of the form, <code>1_TRUE_red</code>, for instance.</p>
+<p>Let’s assume we would like only 12 individuals from the 24 potential unique combinations, but we still want good representation of all/most possible decisions. Using the lhs library from R, we first create 12 random uniform distributions between 0 and 1 for each of the three decisions, a, b and c.</p>
+<pre class="r"><code>library(lhs)
+library(dplyr)
+library(purrr)
+
+# Test data
+a &lt;- 1:3
+b &lt;- c(TRUE, FALSE)
+c &lt;- c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;black&quot;)
+all_decisions &lt;- rbind(list(a,b,c))
+sample &lt;- as.data.frame(randomLHS(12, 3))
+names(sample) &lt;- c(&quot;a&quot;, &quot;b&quot;, &quot;c&quot;)
+
+# Uniform random values between 0 and 1
+sample</code></pre>
+<pre><code>##              a          b         c
+## 1  0.239216377 0.79507789 0.4905952
+## 2  0.565981016 0.47407292 0.7713489
+## 3  0.759566497 0.89087351 0.9237989
+## 4  0.466419652 0.23769785 0.0403471
+## 5  0.001929663 0.30168303 0.9069051
+## 6  0.261833267 0.07336439 0.1132933
+## 7  0.396964854 0.58412133 0.6370780
+## 8  0.687775328 0.57644655 0.3412723
+## 9  0.925314506 0.37923610 0.2467448
+## 10 0.143521174 0.12595323 0.6862867
+## 11 0.584220980 0.95388764 0.5165289
+## 12 0.866736426 0.74861278 0.2903819</code></pre>
+<p>Next we map the 0-1 distributions onto the real distributions of a, b and c. For instance, c has four possible values so the distribution should be 1-4. We also convert the values to factors in order to label them properly.</p>
+<pre class="r"><code># Random choices for each decision with distributions based on a, b and c
+choices &lt;- map2(sample, all_decisions,
+                ~cut(.x, length(.y), labels = .y)) %&gt;%
+  bind_rows()
+  
+choices</code></pre>
+<pre><code>## # A tibble: 12 x 3
+##    a     b     c    
+##    &lt;fct&gt; &lt;fct&gt; &lt;fct&gt;
+##  1 1     FALSE blue 
+##  2 2     TRUE  black
+##  3 3     FALSE black
+##  4 2     TRUE  red  
+##  5 1     TRUE  black
+##  6 1     TRUE  red  
+##  7 2     FALSE blue 
+##  8 3     FALSE green
+##  9 3     TRUE  red  
+## 10 1     TRUE  blue 
+## 11 2     FALSE blue 
+## 12 3     FALSE green</code></pre>
+<p>For convenience we can bring this into a single function like so.</p>
+<pre class="r"><code>lhs_sample &lt;- function(decisions, n){
+  stopifnot(is.list(decisions))
+  len_decisions &lt;- length(decisions)
+  samples &lt;- lhs::randomLHS(n, len_decisions) %&gt;%
+    as.data.frame()
+  names(samples) &lt;- names(decisions)
+  choices &lt;- purrr::map2(samples, decisions,
+                  ~cut(.x, length(.y), labels = .y))
+  bind_rows(choices)
+}
+
+lhs_sample(list(cars = rownames(mtcars), species = unique(iris$Species), letter = LETTERS[24:26]), n = 10)</code></pre>
+<pre><code>## # A tibble: 10 x 3
+##    cars                species    letter
+##    &lt;fct&gt;               &lt;fct&gt;      &lt;fct&gt; 
+##  1 Hornet Sportabout   virginica  X     
+##  2 Merc 240D           versicolor X     
+##  3 Honda Civic         versicolor X     
+##  4 Pontiac Firebird    virginica  Z     
+##  5 Volvo 142E          setosa     Z     
+##  6 Mazda RX4           setosa     Z     
+##  7 Cadillac Fleetwood  virginica  Z     
+##  8 Datsun 710          setosa     Y     
+##  9 Lincoln Continental setosa     X     
+## 10 Lotus Europa        versicolor Y</code></pre>
+</div>
+<div id="testing-coverage" class="section level2">
+<h2>Testing coverage</h2>
+<p>In theory, each sample should be orthogonal, or independent, of each other sample to the greatest possible extent. Another way of putting it is that there should neither be any one value overrepresented or under-represented in the sample set. Let’s test this in practice:</p>
+<pre class="r"><code>library(ggplot2)
+big_sample &lt;- lhs_sample(decisions = list(a = a,b = b,c = c), n = 1000)
+
+ggplot(big_sample, aes(x = c, fill = c)) +
+  geom_bar() +
+  scale_fill_manual(values = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;black&quot;)) +
+  labs(title = &quot;For a single decision, each value has been sampled equally&quot;)</code></pre>
+<p><img src="{{< relref "post/2020-12-18-latin-hypercube-sampling/index.en.html" >}}index.en_files/figure-html/coverage_chart-1.png" width="384" /></p>
+<pre class="r"><code>ggplot(big_sample, aes(x = a, y = b, colour = c)) +
+  geom_jitter() +
+  scale_colour_manual(values = c(&quot;red&quot;, &quot;green&quot;, &quot;blue&quot;, &quot;black&quot;)) +
+  labs(title = &quot;Every value combination across all decisions has also been sampled equally&quot;)</code></pre>
+<p><img src="{{< relref "post/2020-12-18-latin-hypercube-sampling/index.en.html" >}}index.en_files/figure-html/coverage_chart-2.png" width="384" /></p>
+</div>

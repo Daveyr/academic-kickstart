@@ -66,8 +66,6 @@ def score(x: int) -> int:
 
 $$
 E = mc^2
-$$
-
 ---
 
 ## Dual Column Layout
@@ -151,6 +149,30 @@ def example():
 </div>
 
 </div>
+
+---
+
+## Fragments
+
+Make content appear incrementally
+
+```
+{{%/* fragment */%}} One {{%/* /fragment */%}}
+{{%/* fragment */%}} **Two** {{%/* /fragment */%}}
+{{%/* fragment */%}} Three {{%/* /fragment */%}}
+```
+
+Press `Space` to play!
+
+{{% fragment %}} One {{% /fragment %}}
+{{% fragment %}} **Two** {{% /fragment %}}
+{{% fragment %}} Three {{% /fragment %}}
+---
+
+A fragment can accept two optional parameters:
+
+- `class`: use a custom style (requires definition in custom CSS)
+- `weight`: sets the order in which a fragment appears
 
 ---
 
@@ -320,6 +342,7 @@ Try these keyboard shortcuts:
 - `ESC` : Exit modes
 
 ---
+
 <!-- hide -->
 ## Hidden Slide Demo (Inline Comment)
 
@@ -348,138 +371,3 @@ This slide won't appear in the presentation but remains in source for reference.
 
 Note:
 Thank you for your attention! Feel free to reach out with questions or contributions.
-
----
-
-## 🎨 Branding Your Slides
-
-Add your identity to every slide with simple configuration!
-
-**What you can add:**
-
-| Element | Position Options |
-|---------|-----------------|
-| Logo | top-left, top-right, bottom-left, bottom-right |
-| Title | Same as above |
-| Author | Same as above |
-| Footer Text | Same + bottom-center |
-
-Edit the `branding:` section in your slide's front matter (top of file).
-
----
-
-## 📁 Adding Your Logo
-
-1. Place your logo in `assets/media/` folder
-2. Use SVG format for best results (auto-adapts to any theme!)
-3. Add to front matter:
-
-```yaml
-branding:
-  logo:
-    filename: "your-logo.svg"  # Must be in assets/media/
-    position: "top-right"
-    width: "60px"
-```
-
-**Tip:** SVGs with `fill="currentColor"` automatically match theme colors!
-
----
-
-## 📝 Title & Author Overlays
-
-Show presentation title and/or author on every slide:
-
-```yaml
-branding:
-  title:
-    show: true
-    position: "bottom-left"
-    text: "Short Title"  # Optional: override long page title
-  
-  author:
-    show: true
-    position: "bottom-right"
-```
-
-Author is auto-detected from page front matter (`author:` or `authors:`).
-
----
-
-## 📄 Footer Text
-
-Add copyright, conference name, or any persistent text:
-
-```yaml
-branding:
-  footer:
-    text: "© 2024 Your Name · ICML 2024"
-    position: "bottom-center"
-```
-
-**Tip:** Supports Markdown! Use `[Link](url)` for clickable links.
-
----
-
-<!-- no-branding -->
-
-## 🔇 Hiding Branding Per-Slide
-
-Sometimes you want a clean slide (title slides, full-screen images).
-
-Add this comment at the **start** of your slide content:
-
-```markdown
-<!-- no-branding -->
-## My Clean Slide
-
-Content here...
-```
-
-☝️ **This slide uses `<!-- no-branding -->`** — notice no logo or overlays!
-
----
-
-<!-- no-header -->
-
-## 🔇 Selective Hiding
-
-Hide just the header (logo + title):
-
-```markdown
-<!-- no-header -->
-```
-
-Or just the footer (author + footer text):
-
-```markdown
-<!-- no-footer -->
-```
-
-☝️ **This slide uses `<!-- no-header -->`** — footer still visible below!
-
----
-
-<!-- no-footer -->
-
-## ✅ Quick Reference
-
-| Comment | Hides |
-|---------|-------|
-| `<!-- no-branding -->` | Everything (logo, title, author, footer) |
-| `<!-- no-header -->` | Logo + Title overlay |
-| `<!-- no-footer -->` | Author + Footer text |
-
-☝️ **This slide uses `<!-- no-footer -->`** — logo still visible above!
-
----
-
-## 🚀 Get Started
-
-1. Copy this example's front matter as a starting point
-2. Replace logo with yours in `assets/media/`
-3. Customize positions and text
-4. Use `<!-- no-branding -->` for special slides
-
-**Pro tip:** Set site-wide defaults in `config/_default/params.yaml` under `slides.branding`!
-
