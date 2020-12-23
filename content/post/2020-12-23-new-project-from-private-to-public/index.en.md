@@ -21,7 +21,7 @@ image:
 projects: []
 ---
 
-Earlier in the year I wrote about using [systemd](https://www.algorist.co.uk/post/resilient-systemd/) in the context of setting up a service for temperature logging and visualisation on a Raspberry Pi. Whilst the project has been stable for a long time, I'm now releasing it publically. [Here](https://www.algorist.co.uk/internal-project/pi_temperature/) it is. Key features include:
+Earlier in the year I wrote about using [systemd](https://www.algorist.co.uk/post/resilient-systemd/) in the context of setting up a service for temperature logging and visualisation on a Raspberry Pi. Whilst the project has been stable for a long time, I'm now releasing it publically. [Here](https://www.algorist.co.uk/project/internal-project/pi_temperature/) it is. Key features include:
 
 * Logs temperature using a Raspberry Pi and DS18B 1-wire device
 * Queries the Dark Sky weather API 
