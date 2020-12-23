@@ -9,7 +9,7 @@ categories:
 date: 2020-07-26T23:14:11+01:00
 
 # Optional external URL for project (replaces project detail page).
-external_link: "https://github.com/Daveyr/Pi_temperature_dashboard"
+#external_link: "https://github.com/Daveyr/Pi_temperature_dashboard"
 
 # Featured image
 # To use, add an image named `featured.jpg/png` to your page's folder.
@@ -41,6 +41,8 @@ slides: ""
 ---
 
 DS18B10 temperature sensing on a Raspberry Pi, and Darksky weather posting to an Adafruit IO dashboard
+
+Full code and instructions are [here](https://github.com/Daveyr/Pi_temperature_dashboard)
 
 ## Prerequisites
 * Raspberry Pi
