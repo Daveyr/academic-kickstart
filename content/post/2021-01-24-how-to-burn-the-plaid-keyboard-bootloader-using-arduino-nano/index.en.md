@@ -2,7 +2,6 @@
 title: How to burn the Plaid keyboard bootloader using Arduino Nano
 author: ''
 date: '2021-01-24'
-draft: true
 slug: how-to-burn-the-plaid-keyboard-bootloader-using-arduino-nano
 categories:
   - Guide
