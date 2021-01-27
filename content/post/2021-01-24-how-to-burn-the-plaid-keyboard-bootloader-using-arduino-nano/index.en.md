@@ -34,6 +34,7 @@ These instructions were successfully used on the plaid keyboard but are also lik
 ## You will need
 
 * Arduino (I used a Nano but an Uno is typically used)
+* USB cables (micro for keyboard, plus a compatible one for your Arduino if different)
 * Male-female jumper wire and breadboard and 10nF electrolytic capacitor (if using a nano) OR
 * Female-female jumper wire (if using an uno)
 * USB cable
@@ -43,10 +44,10 @@ These instructions were successfully used on the plaid keyboard but are also lik
    + [QMK](https://qmk.fm/) installed
 
 ## Prepare the Arduino
-Upload the inbuilt example sketch called ArduinoISP using the Arduino software to the Arduino board. My Nano was old and a cheap clone so I needed to set the board as "Arduino Nano" and processor "ATmega328P(Old Bootloader)". Once this sketch is uploaded the Arduino has become an AVRISP programmer with a baud rate of 19200 (different speeds can be set but this is the default in the sketch).
+Connect the Arduino to your computer using the USB port. Upload the inbuilt example sketch called ArduinoISP using the Arduino software to the Arduino board. My Nano was old and a cheap clone so I needed to set the board as "Arduino Nano" and processor "ATmega328P(Old Bootloader)". Once this sketch is uploaded the Arduino has become an AVRISP programmer with a baud rate of 19200 (different speeds can be set but this is the default in the sketch).
 
 ## Prepare the keyboard
-First prepare the hardware. With a Nano, it is best to plant it on a breadboard and use Male-female jumper wire to make the connection. Another peculiarity of the Nano, you need to place a 10nF electrolytic capacitor between ground and reset (negative to ground). According to [this site](http://www.martyncurrey.com/arduino-nano-as-an-isp-programmer/), the capacitor is needed to keep the reset pin high. 
+First prepare the hardware, starting by disconnecting your Arduino from your computer. With a Nano, it is best to plant it on a breadboard and use Male-female jumper wire to make the connection. Another peculiarity of the Nano, you need to place a 10nF electrolytic capacitor between ground and reset (negative to ground). According to [this site](http://www.martyncurrey.com/arduino-nano-as-an-isp-programmer/), the capacitor is needed to keep the reset pin high. 
 
 Connect wires between the 6 pins on the plaid keyboard labelled "ISP" to the arduino. From the pcb layout I worked out what the pinout should be for the 6 pins, outlined below.
 
@@ -67,7 +68,7 @@ The arrow on the plaid silkscreen next to one of the ISP pins is designated pin 
 
 ## Make the bootloader file
 
-There are a few ways to make and burn the bootloader. You only have to choose one method.
+There are a few ways to make and burn the bootloader. You only have to choose one method. At this point reconnect your Arduino to your computer using the USB cable.
 
 ### The straightforward command line way
 By far the easiest way to do this is to download [this hex file](https://github.com/Daveyr/plaid/blob/add-bootloader-info/bootloader/plaid_default.hex) I made earlier. You can skip the rest of this section until _Burn the bootloader_ unless you are interested in where it came from. Thanks to Github user [itsnoeasy](https://github.com/hsgw/plaid/issues/10#issuecomment-583849113), this is how I made it.
@@ -164,7 +165,7 @@ The red led on the keyboard should also light up. Pressing the boot button shoul
 
 ## Usage
 
-Now that a bootloader is present on the chip you shouldn't need to program the keyboard using a separate programmer. If you need to change and upload new key mappings then you should be able to do this directly in qmk. With the keyboard connected by usb,
+Now that a bootloader is present on the chip you shouldn't need to program the keyboard using a separate programmer. If you need to change and upload new key mappings then you should be able to do this directly in qmk. With the keyboard connected by USB to your computer,
 
 1. Press and hold the reset button
 2. Press and hold the boot button
