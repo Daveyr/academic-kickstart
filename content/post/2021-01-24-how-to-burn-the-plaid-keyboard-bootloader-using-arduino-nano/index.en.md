@@ -24,8 +24,13 @@ image:
 projects: []
 ---
 
-# How to burn the bootloader on the plaid keyboard using an Arduino board by Richard Davey 2021
-From the website algorist.co.uk
+About six months ago I was bitten by the mechanical keyboard bug and made a numpad (a [yampad](https://github.com/mattdibi/yampad) to be precise). Too much time and money later, I have modified a pcb to make a custom split keyboard and also tackled an ortholinear keyboard called the [plaid](https://github.com/hsgw/plaid), made using through-hole components.
+
+I was finding it very difficult to burn the bootloader and upload the keyboard firmware to the plaid. It seemed like there was no good instructions to be found anywhere, and what information I did find relied on Teensy or dedicated serial programmers that I don't own. So I decided to write down a full list of instructions, based on the use of an Arduino, which far more people own.
+
+<img src="images/plaid_boot_photo.JPG" alt="photo of plaid bootloader wiring" width="70%"/>
+
+These instructions were successfully used on the plaid keyboard but are also likely to be useful for [discipline](https://github.com/coseyfannitutti/discipline), [discipad](https://github.com/coseyfannitutti/discipad), [torn](https://github.com/rtitmuss/torn), [lumberjack](https://github.com/peej/lumberjack-keyboard) and other through-hole mechanical keyboards with the same atmega328p chip.
 
 ## You will need
 
@@ -33,17 +38,20 @@ From the website algorist.co.uk
 * Male-female jumper wire and breadboard and 10nF electrolytic capacitor (if using a nano) OR
 * Female-female jumper wire (if using an uno)
 * USB cable
-* Computer with arduino software installed
-* Avrdude installed
-* [QMK](https://qmk.fm/) installed
+* Computer with the following software installed:
+   + Arduino software
+   + Avrdude installed
+   + [QMK](https://qmk.fm/) installed
 
-## Prepare the arduino
-Upload the inbuilt example sketch called ArduinoISP using the Arduino software to the arduino board. My Nano was old and a cheap clone so I needed to set the board as "Arduino Nano" and processor "ATmega328P(Old Bootloader)". Once this sketch is uploaded the Arduino has become an AVRISP programmer with a baud rate of 19200 (different speeds can be set but this is the default in the sketch).
+## Prepare the Arduino
+Upload the inbuilt example sketch called ArduinoISP using the Arduino software to the Arduino board. My Nano was old and a cheap clone so I needed to set the board as "Arduino Nano" and processor "ATmega328P(Old Bootloader)". Once this sketch is uploaded the Arduino has become an AVRISP programmer with a baud rate of 19200 (different speeds can be set but this is the default in the sketch).
 
 ## Prepare the keyboard
 First prepare the hardware. With a Nano, it is best to plant it on a breadboard and use Male-female jumper wire to make the connection. Another peculiarity of the Nano, you need to place a 10nF electrolytic capacitor between ground and reset (negative to ground). According to [this site](http://www.martyncurrey.com/arduino-nano-as-an-isp-programmer/), the capacitor is needed to keep the reset pin high. 
 
 Connect wires between the 6 pins on the plaid keyboard labelled "ISP" to the arduino. From the pcb layout I worked out what the pinout should be for the 6 pins, outlined below.
+
+<img src="images/Plaid_bootloader_layout_schem.png" alt="schematic" width="70%"/>
 
 ### ISP pinout configuration
 
@@ -56,12 +64,14 @@ The arrow on the plaid silkscreen next to one of the ISP pins is designated pin 
 5. RESET (D10)
 6. GND
 
+<img src="images/Plaid_bootloader_layout_bb.png" alt="breadboard diagramme" width="50%"/>
+
 ## Make the bootloader file
 
-There are a few ways to make and burnt the bootloader. You only have to choose one method.
+There are a few ways to make and burn the bootloader. You only have to choose one method.
 
 ### The straightforward command line way
-By far the easiest way to do this is to download [this hex file](file) I made earlier. Thanks to Github user [itsnoeasy](https://github.com/hsgw/plaid/issues/10#issuecomment-583849113), this is how I made it.
+By far the easiest way to do this is to download [this hex file](https://github.com/Daveyr/plaid/blob/add-bootloader-info/bootloader/plaid_default.hex) I made earlier. You can skip the rest of this section until _Burn the bootloader_ unless you are interested in where it came from. Thanks to Github user [itsnoeasy](https://github.com/hsgw/plaid/issues/10#issuecomment-583849113), this is how I made it.
 
 In a terminal window in your qmk folder, type `make dm9records/plaid:default`. This compiles a hex file of the keyboard firmware. Edit this file in a text editor to remove the last line, which should read :00000001FF. Then append the contents of [this hex file](https://github.com/hsgw/USBaspLoader/blob/plaid/firmware/main.hex), which comes from the USBASPLoader repository. What we're doing is concatenating the plaid firmware with the bootloader so that not only do we have a working keyboard but also the ability to upload new firmware by usb in future. Rename the file to `plaid_default.hex`.
 
@@ -87,7 +97,7 @@ Note, I believe the original author of USBASP made a mistake with the calculatio
 
 ### The from-scratch method
 
-I have modified the USBASPloader repository to be compatible with an Arduino being used as an avrisp programmer. I have also modified the extended fuse bit setting as per above. Clone [this repository](https://github.com/Daveyr/plaid/tree/add-bootloader-info) and in the root folder enter the following.
+I have modified the USBASPloader repository to be compatible with an Arduino being used as an avrisp programmer. I have also modified the extended fuse bit setting as per above. Clone [this repository](https://github.com/Daveyr/plaid_bootloader/tree/plaid_arduino) and in the root folder enter the following.
 
 ```
 make
@@ -95,7 +105,7 @@ make flash
 make fuse
 ```
 
-This should compile the USBASP bootloader, flash it to the keyboard and set the fuse bits according to the makefile instructions. This method is currently untested but should work.
+This should compile the USBASP bootloader, flash it to the keyboard and set the fuse bits according to the makefile instructions. This method is not fully tested (I had already burnt the bootloader using the first method so could not be sure that this method overwrote it).
 
 ### The Arduino software method
 
@@ -117,7 +127,7 @@ plaid.pid.3=0x0243
 
 plaid.upload.tool=avrdude
 plaid.upload.protocol=arduino
-plaid.upload.maximum_size=32768
+plaid.upload.maximum_size=32256
 plaid.upload.maximum_data_size=2048
 plaid.upload.speed=19200
 plaid.upload.using=arduino:arduinoisp
@@ -162,4 +172,4 @@ Now that a bootloader is present on the chip you shouldn't need to program the k
 3. Release the reset button
 4. Release the boot button.
 
-Let's assume you have a new keymap for the keyboard called _mynewkeymap_ for the the keyboard. In the qmk folder, type `make dm9records/plaid:mynewkeymap:flash`. This will compile the keymap and flash directly without the need for the Nano.
+Let's assume you have a new keymap for the keyboard called _mynewkeymap_ for the keyboard. In the qmk folder, type `make dm9records/plaid:mynewkeymap:flash`. This will compile the keymap and flash directly without the need for the Nano.
