@@ -24,13 +24,13 @@ subtitle = ""
   icon = "chart-line"
   icon_pack = "fas"
   name = "Statistics"
-  description = "Good working knowledge"  
+  description = "Practitioner"  
 
 [[feature]]
   icon = "lightbulb"
   icon_pack = "fas"
   name = "Energy sector"
-  description = "Domain expertise"
+  description = "Domain expert"
   
 [[feature]]
   icon = "python"
@@ -41,14 +41,14 @@ subtitle = ""
 [[feature]]
   icon = "github"
   icon_pack = "fab"
-  name = "Github"
+  name = "Git"
   description = "Intermediate"
   
 [[feature]]
   icon = "users"
   icon_pack = "fas"
   name = "Corporate training"
-  description = "Experienced"
+  description = "Experienced trainer"
 
 
 # Uncomment to use emoji icons.
