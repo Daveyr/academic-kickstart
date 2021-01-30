@@ -1,0 +1,30 @@
+---
+title: Using Rstudio Server with docker
+author: ''
+date: '2021-01-30'
+draft: True
+slug: using-rstudio-server-with-docker
+categories:
+  - Guide
+tags:
+  - Docker
+  - R
+  - Rstudio
+subtitle: ''
+summary: ''
+authors: []
+lastmod: '2021-01-30T11:29:32Z'
+featured: no
+image:
+  caption: ''
+  focal_point: ''
+  preview_only: no
+projects: []
+---
+
+<script src="{{< blogdown/postref >}}index.en_files/header-attrs/header-attrs.js"></script>
+
+
+<p>The <a href="https://www.rocker-project.org/">Rocker project</a> is a major boon for R users.</p>
+<pre class="bash"><code>from rocker/rstudio
+RUN &quot;R -e install.packages(&#39;tidyverse&#39;)&quot;</code></pre>
