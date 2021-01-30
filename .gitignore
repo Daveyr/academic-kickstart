@@ -70,3 +70,9 @@ npm-debug.log*
 
 # IDEs
 .idea/
+
+# R
+.Rproj.user
+.RData
+.Rhistory
+.Rprofile
