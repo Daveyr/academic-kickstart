@@ -36,6 +36,8 @@ image: rocker/r-base
 stages:
     - test
     - quality
+variables:
+     R_LIBS_USER: "$CI_PROJECT_DIR/ci/lib"
 test:
    stage: test
    script:
