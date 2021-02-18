@@ -31,7 +31,7 @@ The version control tool of choice (for the moment at least) for my company's te
 
 I went to [Stack Overflow](https://stackoverflow.com/a/51874023/10960765) for inspiration (as usual). From there I built the pipeline in yaml syntax, below.
 
-``` bash
+``` 
 image: rocker/r-base
 stages:
     - test
