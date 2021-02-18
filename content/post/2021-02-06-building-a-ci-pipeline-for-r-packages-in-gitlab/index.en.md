@@ -36,8 +36,14 @@ image: rocker/r-base
 stages:
     - test
     - quality
-variables:
-     R_LIBS_USER: "$CI_PROJECT_DIR/ci/lib"
+
+default:
+   before_script:
+    - mkdir -p installed_deps
+    - echo 'R_LIBS="installed_deps"' > .Renviron
+    - echo 'R_LIBS_USER="installed_deps"' >> .Renviron
+    - echo 'R_LIBS_SITE="installed_deps"' >> .Renviron
+
 test:
    stage: test
    script:
@@ -47,12 +53,13 @@ test:
     - R CMD build . --no-build-vignettes --no-manual
     - PKG_FILE_NAME=$(ls -1t *.tar.gz | head -n 1)
     - R CMD check "${PKG_FILE_NAME}" --no-build-vignettes --no-manual
-      cache:
-    paths:
-     - $R_LIBS_USER
+    cache:
+      key: "$CI_COMMIT_REF_SLUG"
+      paths:
+       - installed_deps/
    artifacts:
     paths:
-     - ${PKG_FILE_NAME}.tar.gz
+     - '*.Rcheck/'
    only:
     - master
     - dev
@@ -65,13 +72,17 @@ quality:
 
 What does it do? Well, we start with the base R docker image from the _rocker_ project, making sure that the package lists are up to date (pretty sure this is built on Debian linux, so the package manager would be dpkg). 
 
+Before we start on the actual job scripts, we run some code to make a folder called `installed_deps` and declare some environment variables in `.Renviron` to let R know this is the place to install packages. This is important for caching, described further below.
+
 Next we focus on the test job. We install the bare minimum R libraries on top of base R so that we can test the package: `testthat` and `devtools`. Note we elect to install no recommended packages alongside to make sure the container is as debloated as possible.
 
 After this we install all the dependencies that are specified in the DESCRIPTION file you wrote as part of your R package. When I used the original Stack answer above, it did not have the `dependencies = TRUE` argument, which meant that none of my suggested packages were installed. This caused my build to fail because some of my tests depended on them; however, for most use cases you may not need this argument.
 
+As part of this stage we also define the cache to include the R library folder we set up in the `before_script:` section. This makes subsequent jobs run a **lot** faster (>5 times in my experience) because we don't have to install packages again if they haven't changed on CRAN. Note that this cache is only available for this stage, unless we define the cache outside of the stage.
+
 The last three lines in the script build the package source as a _tar.gz_ compressed file, store the package name from this file into a variable, and then use it to call `CMD check`. This final line tests both for whether all unit tests described in the _/tests_ folder have passed, and whether the package can be built without errors. Note that for building the source and checking it we specify that we will not build vignettes or man pages. Although testing these might be useful they take a long time to run. In lieu of testing the vignette, I will often run a battery of unit tests using `context("Testing according to the vignette")`, replicating each line of the vignette in tests.
 
-Caches are useful insofar as we can store the contents of a folder (in our case, the R library folder) so we don't have to download and install the R libraries each time. This should trim down the run time.
+Caches are useful insofar as we can store the contents of a folder (in our case, the R library folder) so we don't have to download and install the R libraries each time. This should trim down the run time. We declare this folder path using a variable defined above, which uses another environment variable called  `CI_PROJECT_DIR`.
 
 Artifacts are files that can be downloaded after the job is successfully run. We specify the compressed source file as an artifact.
 
