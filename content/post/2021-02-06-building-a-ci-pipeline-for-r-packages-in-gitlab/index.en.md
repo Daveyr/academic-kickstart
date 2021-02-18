@@ -82,9 +82,7 @@ As part of this stage we also define the cache to include the R library folder w
 
 The last three lines in the script build the package source as a _tar.gz_ compressed file, store the package name from this file into a variable, and then use it to call `CMD check`. This final line tests both for whether all unit tests described in the _/tests_ folder have passed, and whether the package can be built without errors. Note that for building the source and checking it we specify that we will not build vignettes or man pages. Although testing these might be useful they take a long time to run. In lieu of testing the vignette, I will often run a battery of unit tests using `context("Testing according to the vignette")`, replicating each line of the vignette in tests.
 
-Caches are useful insofar as we can store the contents of a folder (in our case, the R library folder) so we don't have to download and install the R libraries each time. This should trim down the run time. We declare this folder path using a variable defined above, which uses another environment variable called  `CI_PROJECT_DIR`.
-
-Artifacts are files that can be downloaded after the job is successfully run. We specify the compressed source file as an artifact.
+Artifacts are files that can be downloaded after the job is successfully run. We specify the folder where the compressed source file is created as an artifact.
 
 The `only:` section within the test job refers to only the branches we wish to run the job on. Instead of whitelisting branches we could instead have dealt by exception, using `except:` instead. The configuration above only runs the test job on the master and dev branches.
 
@@ -93,4 +91,4 @@ The last job is from a Gitlab template that tests for code quality. I'm not sure
 ## DIY runners
 A note on using CI pipelines on the Gitlab free tier: it is **very** easy to chew through the 200 free minutes per month. I managed to consume around 70% of this in a day and a half of experimenting, which spurred me on to make my own runner to get around this limitation.
 
-The [Gitlab-runner project](https://www.algorist.co.uk/project/internal-project/gitlab-runner/) is the result of this experimentation. I successfully set up a runner on a Raspberry Pi 4 with 8gb of RAM but since the _rocker/r-base_ image is not arm compatible then the job failed. One possibility is to change the image; the other is to use a computer with compatible architecture. In the end I used my other laptop and it ran just fine. No more limited pipeline minutes!
+The [Gitlab-runner project](https://www.algorist.co.uk/project/internal-project/gitlab-runner/) is the result of this experimentation. I successfully set up a runner on a Raspberry Pi 4 with 8gb of RAM but since the _rocker/r-base_ image is not arm compatible then the job failed. One possibility is to change the image; the other is to use a computer with compatible architecture. In the end I used my other laptop and it ran just fine; I then changed the base image to the one in my [armr project](https://github.com/Daveyr/armr) and it also ran on my Raspberry Pi fine as well. No more limited pipeline minutes!
