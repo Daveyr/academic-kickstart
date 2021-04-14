@@ -24,7 +24,7 @@ projects: []
 
 In this second part of the series of posts on extracting objects from a CAD document, I'll go through the process of using the `ezdxf` package to implement the extraction strategy discussed in [part one](https://www.algorist.co.uk/post/extract-features-from-cad-documents-part-1-a-primer/).
 
-# Prologue
+## Prologue
 In part one we looked at the structure of a CAD file and built up a strategy to extract seat types and locations from an architect's floor plan. The motivation for this is to provide seat location data to a model that creates a stack plan with optimal locations of teams to office amenities and other teams they collaborate with.
 
 In summary, our strategy is:
@@ -35,7 +35,7 @@ In summary, our strategy is:
 * extract unique ID, x and y features from every element returned from the query, recording the block type and layer it came from;
 * check for errors and write to csv file.
 
-# ezdxf
+## ezdxf
 Since the genetic algorithm we've built is in R, I tried to build an extraction tool in R. However, the only DXF file loader package I could find is called [ezdxf](https://ezdxf.readthedocs.io/en/stable/) and is built in Python. I'm not a fan of reinventing the wheel so I wrote a custom package in Python that is built on top of `ezdxf`'s classes and methods.
 
 The following functions are building blocks to load the model space from a dxf file, query the model space object for block inserts that belong to a certain block type or layer, and to extract them. They rely heavily on the documentation and tutorials from the `ezdxf` readme website so I would encourage the interested reader to refer to those documents for background information.
@@ -193,7 +193,7 @@ def extract(model, layer=None, block=None, scaling = 0.001):
 
 Note that the default scaling is 0.01. This is because typical CAD files dealing with building drawings have units of cm, and I would like to store x,y positions in metres.
 
-# Taking it further
+## Taking it further
 
 At [Arcadis Gen](https://arcadisgen.com/) we take a package based approach to consultancy to make enduring products from one-off engagements and shorten the development cycle for future similar projects. To do this I developed a Python package called `cadextract`, built on top of ezdxf and providing helper functions to extract seat plans. The functions in this package look a little similar to the above, but also include `fuzzy_extract` to deal with queries using regular expressions, `batch_extract` that extracts from multiple DXF files using the same query and stores them in a single dataframe, plotting objects, and more.
 
