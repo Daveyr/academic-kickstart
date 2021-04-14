@@ -28,7 +28,7 @@ This is the first part of a series of posts describing my experience of extracti
 
 Recently at work a project came up that involved the optimisation of building occupancy during the refit of a 16 floor central London office block. As we intend to optimise team locations down to the seat level within a floor, we were given floor plans in both pdf and dwg file formats.
 
-The original scope allowed for us to rely on another team to manually encode the distances between each desk on each floor, but there are many downsides to this approach: human error; costly rework when plans change; lack of ability to iteratively improve on feature extraction; and huge risk of schedule overrun when modelling has to wait on this input data. The alternative was to programmatically scrape the CAD file for seat ID and X and Y coordinates. I'll present the solution in Part 2, but first here is what I learned about the structure of CAD files that I needed before writing an extraction utility.
+The original scope allowed for us to rely on another team to manually encode the distances between each desk on each floor, but there are many downsides to this approach: human error; costly rework when plans change; lack of ability to iteratively improve on feature extraction; and huge risk of schedule overrun when modelling has to wait on this input data. The alternative was to programmatically scrape the CAD file for seat ID and X and Y coordinates. I'll present the solution in [Part 2](https://www.algorist.co.uk/post/extract-features-from-cad-documents-part-2-using-ezdxf/), but first here is what I learned about the structure of CAD files that I needed before writing an extraction utility.
 
 ## File types
 There are generally two file types in the world of CAD: DWG and DXF. DWG is meant as shorthand for _drawing_, and is a proprietary file format belonging to AutoCAD. It's not very useful on its own so I found it best to convert to DXF using the open source file converter provided by the [Open Design Alliance](https://www.opendesign.com/guestfiles/oda_file_converter).
@@ -60,4 +60,4 @@ A layer organises many elements and inserts under common attributes and under co
 
 For my purpose, I need to extract each seat (or alternatively, each desk) from each floor. This means that I should search for every insert of the appropriate seat block, likely located within a common layer. Ideally that search would return a list containing all the inserts, each of which should contain a unique identifier and an X/Y coordinate.
 
-For that we will use the [ezdxf](https://ezdxf.readthedocs.io/en/stable/) package in Python in Part 2.
+For that we will use the [ezdxf](https://ezdxf.readthedocs.io/en/stable/) package in Python in [Part 2](https://www.algorist.co.uk/post/extract-features-from-cad-documents-part-2-using-ezdxf/).
