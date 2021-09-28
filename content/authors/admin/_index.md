@@ -10,7 +10,7 @@ authors:
 superuser: true
 
 # Role/position
-role: Analytical Consultant
+role: Group Leader, Data & Decision Science
 
 # Organizations/Affiliations
 organizations:
@@ -67,4 +67,4 @@ highlight_name: false
 # - Visitors
 ---
 
-Richard Davey is an analytical consultant at Arcadis Gen. When he is not working on optimisation problems for clients as diverse as road infrastructure, urban rail, electricity networks and generators, he can be found writing R packages and building electronic hardware.
+Richard Davey is Group Leader of the Data & Decision Science group at Arcadis Gen. When he is not working on optimisation problems for clients in road, rail, facilities management, electricity networks and generation, he can be found writing R packages and building electronic hardware.
