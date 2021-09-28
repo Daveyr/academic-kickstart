@@ -1,7 +1,7 @@
 ---
 title: 'Extract features from CAD files Part 3: The future'
 author: ''
-date: '2021-04-21'
+date: '2021-09-28'
 slug: extract-features-from-cad-files-part-3-the-future
 categories:
   - Blog
@@ -12,7 +12,7 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-04-21T16:46:59+01:00'
+lastmod: '2021-09-28T16:46:59+01:00'
 featured: no
 image:
   caption: ''
@@ -23,7 +23,7 @@ projects: []
 
 In this third part of the series of posts on extracting objects from a CAD document, I’ll discuss how you might develop this CAD extraction tool further and the problems you might be able to solve.
 
-# Prologue
+## Prologue
 In [Part 1](https://www.algorist.co.uk/post/extract-features-from-cad-documents-part-1-a-primer/) we looked at the structure of a CAD file and built up a strategy to extract seat types and locations from an architect's floor plan. The motivation for this is to provide seat location data to a model that creates a stack plan with optimal locations of teams to office amenities and other teams they collaborate with.
 
 In [Part 2](https://www.algorist.co.uk/post/extract-features-from-cad-documents-part-2-using-ezdxf/) we built an extraction tool based on the Python `ezdxf` package that can read and query DXF files. We loaded a floor plan in DXF, printed the block types in a layer, extracted all block inserts that matched a layer and/or block type query and outputted them to a pandas dataframe.
@@ -77,13 +77,15 @@ odafc.export_dwg(doc, 'my_R2018.dwg', version='R2018')
 
 ## Generative design	
 
-The ultimate aim of the stack plan modelling tool is to develop it into a product. What better way to do this than to create a workflow that starts with a CAD drawing and ends with an annotated CAD drawing labelled according to team locations? You could reassign seats from your seats layer to new layers named after the relevant teams on that floor. However, the more appropriate method is likely to use attribute definitions. 
+The ultimate aim of the stack plan modelling tool is to develop it into a product. What better way to do this than to create a workflow that starts with a CAD drawing and ends with an annotated CAD drawing labelled according to team locations? You could reassign seats from your seats layer to new layers named after the relevant teams on that floor. However, the more appropriate method is likely to use attribute definitions.
+
+Below is an example of isolating an entity and changing an attribute. For a real use case, `entities` would be a list of block IDs of seats that belong to a certain team and the attribute to change would be the team ID.
 
 ```python
 doc = ezdxf.readfile(filepath)
 model = doc.modelspace()
 
-# load a dataframe with unique ID that refers to a block insert "handle", and a team name
+# load a data frame with unique ID that refers to a block insert "handle", and a team name
 # define a query_string to search for the appropriate layer/blocks that refer to your allocatable seats
 entities = [x for x in model.query(query_string) if x.has_dxf_attrib('name')]
 
@@ -95,11 +97,20 @@ if len(entities):
 
 ```
 
-### Stretch goal
+## Stretch goal
 
 In practice a client will take a stack plan recommendation and remodel a floor to include additional teams, additional seats (if the recommended teams for a floor mean the floor is over capacity) or to space desks out if the floor is under capacity. Wouldn't it be great if we could generate floor plans automatically, or at least edit an existing one to accommodate these changes? Between a model that can learn floor plan design principles (e.g., minimum separation between objects, coincidence of a seat with a desk, etc.) and the ability to insert new block references into the model (see below), we would have all we need to achieve this.
 
+An example from the [ezdxf](https://ezdxf.readthedocs.io/en/stable/tutorials/blocks.html?highlight=random#block-references-insert) documentation.
+
 ```python
+import ezdxf
+import random
+def get_random_point():
+    """Returns random x, y coordinates."""
+    x = random.randint(-100, 100)
+    y = random.randint(-100, 100)
+    return x, y
 # Get the modelspace of the drawing.
 msp = doc.modelspace()
 
