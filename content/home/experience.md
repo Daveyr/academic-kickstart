@@ -18,15 +18,30 @@ date_format = "Jan 2006"
 #   Leave `date_end` empty if it's your current employer.
 #   Begin/end multi-line descriptions with 3 quotes `"""`.
 [[experience]]
+  title = "Group Leader - Data & Decision Science"
+  company = "Arcadis Gen"
+  company_url = "www.arcadisgen.com"
+  location = "Sheffield, UK"
+  date_start = "2021-07-01"
+  date_end = ""
+  description = """
+  Responsibilities include:
+
+  * Recruitment, retention and performance management of a ~25 person data science group
+  * Delivery management of consultancy projects and Analytics as a Service (AaaS) products
+  * Technical delivery of projects alongside my team
+  """
+
+[[experience]]
   title = "Analytical Consultant"
   company = "Arcadis Gen"
   company_url = "www.arcadisgen.com"
   location = "Sheffield, UK"
   date_start = "2018-12-12"
-  date_end = ""
+  date_end = "2021-06-30"
   description = """
   Responsibilities include:
-  
+
   * Physical asset investment optimisation
   * Consultancy work including corporate training
   * Innovating new algorithms, tools and products
@@ -41,7 +56,7 @@ date_format = "Jan 2006"
   date_end = "2019-11-05"
   description = """
   Responsibilities included:
-  
+
   * Quantitative scenario modelling to support strategy
   * Building financial models
   * Commodity risk reporting to CEO and CFO
@@ -55,7 +70,7 @@ date_format = "Jan 2006"
   date_start = "2013-10-08"
   date_end = "2017-10-29"
   description = """I worked as a petroleum production geologist for the New Zealand oil and gas titles and administration authority called New Zealand Petroleum and Minerals"""
-  
+
   [[experience]]
   title = "Consultant Geoscientist"
   company = "FrOGTech New Zealand"
@@ -64,7 +79,7 @@ date_format = "Jan 2006"
   date_start = "2013-04-01"
   date_end = "2013-09-27"
   description = """I worked as a petroleum exploration geophysicist for a short period before the office closed down."""
-  
+
   [[experience]]
   title = "Geophysicist"
   company = "CGG Robertson"
@@ -73,7 +88,7 @@ date_format = "Jan 2006"
   date_start = "2010-09-06"
   date_end = "2013-03-15"
   description = """I worked as a petroleum exploration geophysicist as part of a client facing multi-disciplinary team."""
-  
+
   [[experience]]
   title = "Interpretation Geoscientist"
   company = "Fugro Airborne Surveys Pty"
@@ -81,5 +96,5 @@ date_format = "Jan 2006"
   location = "Perth, Australia"
   date_start = "2007-08-14"
   date_end = "2010-02-28"
-  
+
 +++
