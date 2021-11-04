@@ -22,7 +22,6 @@ projects: []
 ---
 
 <img src="/img/stoic_wide.jpeg" alt="" width="100%"/>
-
 I think my work colleagues and friends are now bored of me raving about the book _Antifragile_ by Nassim Taleb. My reading style is to read very slowly, mulling over each sentence again and again. When a book is this dense I also tend to make notes. Here they are below, from the point of view of a consultant and a numerical modeller. Some examples are taken straight out of the book whilst others are ones I have personally encountered that illustrate concepts the book raises.
 
 ## Consultants don't come out of this looking good
@@ -41,7 +40,7 @@ Optimisation makes things fragile. An excellent example in the book is the traff
 
 ![Traffic congestion: a symptom of a fragile system](/img/flyover.jpeg)
 
-Now let's think about this in terms of investment planning, route planning, or similar optimisation problems. You will generally optimise by reducing a cost function (travel time, risk cost, etc.) subject to constraints (sites you must visit, annual budget, etc.) but what is generally neglected is the sensitivity of these constraints, along with related assumptions, to the cost function. Say an infrastructure planner optimally plans a road network for an expected traffic volume. A plan is found that serves the projected growth in road traffic over the next ten years with the minimum cost. The model sees no benefit in oversizing this project, even though a small additional cost may result in a project that delivers much more capacity. Then six years pass and the traffic growth projection was underestimated and when road works coincide with home games at the sports stadium there is mass congestion. 
+Now let's think about this in terms of investment planning, route planning, or similar optimisation problems. You will generally optimise by reducing a cost function (travel time, risk cost, etc.) subject to constraints (sites you must visit, annual budget, etc.) but what is generally neglected is the sensitivity of these constraints, along with related assumptions, to the cost function. Say an infrastructure planner optimally plans a road network for an expected traffic volume. A plan is found that serves the projected growth in road traffic over the next ten years with the minimum cost. The model sees no benefit in oversizing this project, even though a small additional cost may result in a project that delivers much more capacity. Then 6 six years pass and the traffic growth projection was underestimated and when road works coincide with home games at the sports stadium there is mass congestion. 
 
 Planning in such a lean way may appear optimal but is actually fragile. However, fat in the system can mitigate Black Swans. 
 
