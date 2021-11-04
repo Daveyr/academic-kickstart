@@ -1,8 +1,8 @@
 ---
-title: Antifragile book notes
+title: Antifragile book notes Part 1
 author: ''
 date: '2021-10-11'
-slug: antifragile-book-notes
+slug: antifragile-book-notes-part-1
 categories:
   - Blog
 tags:
@@ -21,12 +21,12 @@ image:
 projects: []
 ---
 
-I think my work colleagues and friends are now bored of me raving about the book Antifragile by Nassim Taleb. My reading style is to read very slowly, mulling over each sentence again and again. When a book is this dense I also tend to make notes. Here they are below, from the point of view of a consultant and a numerical modeller. Some examples are taken straight out of the book whilst others are ones I have personally encountered that illustrate concepts the book raises.
+I think my work colleagues and friends are now bored of me raving about the book _Antifragile_ by Nassim Taleb. My reading style is to read very slowly, mulling over each sentence again and again. When a book is this dense I also tend to make notes. Here they are below, from the point of view of a consultant and a numerical modeller. Some examples are taken straight out of the book whilst others are ones I have personally encountered that illustrate concepts the book raises.
 
 ## Consultants don't come out of this looking good
 Back in the mists of time, everyone had skin in the game. In an agrarian economy, if you took a risk planting an unusual crop, or grew lax with the safety of your flock, it was your harvest at risk and only yourself to blame. In the modern world there has been a subtle and almost unnoticed risk transfer, where some jobs tend to be exposed to upside whilst transferring the downside risk to others. The archetype of this antifragility of the individual and fragility to society is a bank executive, where the position can enjoy bonuses right up to the moment their business (which they do not own) defaults and costs tax payers a large amount of money to bail out. It is an agency problem, where the agent (bank executive) has misaligned incentives to that of the principle (the bank).
 
-Other more subtle examples include any advisory service where the payment is not linked to the outcome from implementing the advice; pundits and forecasters whose salaries are not linked to the accuracy of their pronouncements are also in this category. Consultants rarely have skin in the game and also commonly fall into this category. So what, if anything, can we do? We need to remove the agency problem by realigning incentives. Structuring the contract so that payment is conditional or proportional to benefit would encourage analytical consultants like myself to model realistically and build in the ability to measure performance. It would also encourage clients to engage with the modelling work they requested and actually implement it, rather than use it to bamboozle a regulator into granting more funding or jump through a regulatory hoop (another agency problem). "Sticky" solutions like subscription based services also tend to align incentives: if the service it provides is rubbish then a customer can elect to leave the following month.
+Other more subtle examples include any advisory service where the payment is not linked to the outcome from implementing the advice; pundits and forecasters whose salaries are not linked to the accuracy of their pronouncements are also in this category. Consultants rarely have skin in the game and also commonly fall into this category. So what, if anything, can we do? We need to remove the agency problem by realigning incentives. Structuring the contract so that payment is conditional or proportional to benefit would encourage consultants to model realistically and build in the ability to measure performance. Of course this requires buy-in from clients themselves to implement the advice and track its performance. "Sticky" solutions like subscription based services also tend to align incentives: if the service it provides is rubbish then a customer can elect to leave the following month.
 
 Do we need to go back to what they did in Roman times to keep engineers and builders honest? Back then, if a house that you built fell down and killed someone then you were executed as punishment. No wonder you see lots of Roman buildings and foundations that have survived to the present day.
 
@@ -45,23 +45,10 @@ There is something very deterministic about most kinds of modelling - strategic 
 
 The reason that optimisation fragilises is because the act of removing all fat in the system is the removal of optionality. In the book, debt is seen as the ultimate example of fragilisation because it removes all optionality from you.
 
-Thalesian thinking (in terms of optionality and identifying non-linear effects) as opposed to Aristotelian thinking (in terms of precise risk calculation).
+This kind of deterministic approach is described by Taleb as _Aristotelian_ thinking. It is rooted in the enlightenment, where scientific optimism led people to believe that everything could be eventually known and measured with ever increasing accuracy. Our post-modern world is more suited to _Thalesian_ thinking, where uncertainty and volatility is expected. Far from being a recent phenomenon, this view is actually rooted in stoicism, where the way to tackle chaos and non-linear effects was to keep ones options open. 
 
-Climate change, modelling approaches, portfolio optimisation
+So much philosophy, but how does this relate to the real world? Let's take two unrelated examples: commodity risk for electricity generation and portfolio optimisation. A deterministic approach for commodity risk might be to attempt to accurately model the whole electricity market, river flows into hydroelectric power schemes and all your take-or-pay gas contracts, along with the most accurate weather/forward electricity price/spot gas/demand forecasts and attempt to model the next few weeks/months. A more intellectually honest approach might be to run Monte Carlo simulations of distributions of reasonable values for all these inputs and measure the spread of outcomes. A Thalesian approach would be this plus stress test modelling for specific extreme worst case scenarios (black swans) and measure how long the business survives. Even if this specific scenario never happens, by having Treasury maintain the amount of cash on hand to weather it you can have reasonable confidence in being able to weather similar  magnitude events. We actually had this hybrid probabilistic and extreme stress test modelling approach when I worked at Contact Energy.
 
-## Via negativa
-The "do something" fallacy is the mistaken belief that in the face of a problem the act of doing something/anything is always superior to doing nothing. It is closely related to the agency problem, where the agent (e.g., a doctor) must often be seen to be doing something in order to justify their position as an agent, even if premeditated inaction is in the best interest of the priniciple (e.g., the patient). 
+The second example is portfolio optimisation for construction/infrastructure projects. A deterministic approach might be to gather all the input data for potential projects (cost, benefit, duration, prerequisite projects, exclusivities between projects) and then optimise the gantt chart for maximum benefit under cost and time constraints. A better way would be to benchmark historic projects against those proposed to weed out the hubris caused by the planning fallacy. A Thalesian approach would be to model many times, perturbing the input values to test the sensitivity of the whole programme to changing inputs. From there you would be able to see projects that are much more resilient to price shocks and schedule blow out, and projects that enable optionality (e.g., those that are the prerequisite to others but themselves have no prerequisites) rather than those that constrain optionality.
 
-One of the most prominent illustrations of this in my work is in asset management, where the no-investment case is always the most risky, and any intervention (whether refurbishment or replacement) will reduce the risk. In general this is true, but there are nuances to the approach. What about infant mortality of assets where damage has occurred during installation or where there are manufacturing defects? How is this superior to not replacing an asset that has exceeded its expected life but is otherwise operating just fine? What about finger tip maintenance or stress tests that due to operator error actually cause failure? The observer effect is a phenomenon not readily acknowledged in asset maintenance. It is worth remembering that the Chernobyl nuclear power station meltdown of 1986 was caused during a drill to test the preparedness for the reactor being operated outside of its limits.
-
-## Burden of proof of the novel.
-Tobacco, thalydomide.
-
-## The curse of size
-Planning fallacy and how banks became "too big to fail". Small projects have small errors that come out in the wash.
-
-## Top down versus bottom up
-Rationalism, or an analytical approach, versus skeptical empiricism. Which one do we subscribe to for numerical modelling?
-
-### The average versus the dispersion
-The average temperature of the grandmother problem. Individual people or things are inherently fragile as the effect of departure from average exposes us to harm. Use transformers as an example: time spent above the rated load causes thermal related degradation and harm, proportional to the amount above the threshold and the duration that this is maintained.
+Join me for part two, where I will share my notes on _via negativa_, the curse of size, top down versus bottom up approaches, the average versus the dispersion, and the burden of proof of the novel.
