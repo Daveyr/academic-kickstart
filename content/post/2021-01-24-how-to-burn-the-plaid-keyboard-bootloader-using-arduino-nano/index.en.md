@@ -23,7 +23,9 @@ image:
 projects: []
 ---
 
-About six months ago I was bitten by the mechanical keyboard bug and made a numpad (a [yampad](https://github.com/mattdibi/yampad) to be precise). Too much time and money later, I have modified a pcb to make a custom split keyboard and also tackled an ortholinear keyboard called the [plaid](https://github.com/hsgw/plaid), made using through-hole components.
+<img src="images/plaid_blank_keyset_small.JPG" alt="plaid keyboard" width="70%"/>
+
+About six months ago I was bitten by the mechanical keyboard bug and made a numpad (a [yampad](https://github.com/mattdibi/yampad) to be precise). Too much time and money later, I have made a custom split keyboard (based on the [lily58](https://github.com/kata0510/Lily58)) and also tackled an ortholinear keyboard called the [plaid](https://github.com/hsgw/plaid), made using through-hole components.
 
 I was finding it very difficult to burn the bootloader and upload the keyboard firmware to the plaid. It seemed like there was no good instructions to be found anywhere, and what information I did find relied on Teensy or dedicated serial programmers that I don't own. So I decided to write down a full list of instructions, based on the use of an Arduino, which far more people own.
 
