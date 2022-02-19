@@ -22,7 +22,7 @@ bio: My interests include earth science, numerical modelling and problem solving
 
 interests:
 - Numerical problem solving
-- Decision making under uncertainty
+- Risk and uncertainty
 - Investment optimisation
 
 education:
