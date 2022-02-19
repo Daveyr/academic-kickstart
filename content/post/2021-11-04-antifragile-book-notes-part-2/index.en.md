@@ -1,8 +1,7 @@
 ---
 title: Antifragile book notes Part 2
 author: ''
-draft: true
-date: '2021-11-04'
+date: '2022-02-19'
 slug: antifragile-book-notes-part-2
 categories:
   - Blog
@@ -13,7 +12,7 @@ tags:
 subtitle: ''
 summary: ''
 authors: []
-lastmod: '2021-11-04T19:53:07Z'
+lastmod: '2022-02-19T20:58:07Z'
 featured: no
 image:
   caption: ''
