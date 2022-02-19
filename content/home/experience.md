@@ -78,7 +78,7 @@ date_format = "Jan 2006"
   location = "Wellington, New Zealand"
   date_start = "2013-04-01"
   date_end = "2013-09-27"
-  description = """I worked as a petroleum exploration geophysicist for a short period before the office closed down."""
+  description = """I worked as a petroleum exploration geophysicist, helping to establish a new office in a new country for the company."""
 
   [[experience]]
   title = "Geophysicist"
