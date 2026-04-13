@@ -1,0 +1,4 @@
+{{- $username := .Get "username" | default "" -}}
+{{- if $username -}}
+  {{- printf "https://twitter.com/%s" $username -}}
+{{- end -}}

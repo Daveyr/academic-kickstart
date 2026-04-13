@@ -1,0 +1,12 @@
+{{- $_ := .Scratch.Set "__x" "" -}}
+{{- $src := .Get "src" | default "" -}}
+{{- $username := .Get "username" | default "" -}}
+{{- $type := .Get "type" | default "" -}}
+{{- if $src -}}
+  {{- $_ := .Scratch.Set "__x" $src -}}
+{{- else if $username -}}
+  {{- $_ := .Scratch.Set "__x" (printf "https://x.com/%s" $username) -}}
+{{- else if eq $type "post" -}}
+  {{- $_ := .Scratch.Set "__x" (.PagePermalink) -}}
+{{- end -}}
+{{- .Scratch.Get "__x" -}}

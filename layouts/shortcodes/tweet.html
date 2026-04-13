@@ -1,0 +1,4 @@
+{{- $id := .Get "id" | default "" -}}
+{{- if $id -}}
+  {{- printf "https://twitter.com/i/status/%s" $id -}}
+{{- end -}}
