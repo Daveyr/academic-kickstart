@@ -27,10 +27,13 @@ image:
 #   icon_pack: fab
 #   icon: twitter
 
-url_code: "https://github.com/Daveyr/gitlab-runner"
 url_pdf: ""
 url_slides: ""
 url_video: ""
+links:
+- name: GitHub
+  url: https://github.com/Daveyr/gitlab-runner
+  type: code
 
 # Slides (optional).
 #   Associate this project with Markdown slides.
