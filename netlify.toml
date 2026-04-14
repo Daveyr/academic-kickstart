@@ -21,7 +21,7 @@
   publish = "public"
 
 [build.environment]
-HUGO_VERSION = "0.80.0"
+HUGO_VERSION = ""
   HUGO_ENABLEGITINFO = "true"
   HUGO_LOG_I18N_WARNINGS = "true"
   HUGO_LOG_WARNINGS = "true"
